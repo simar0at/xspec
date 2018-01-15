@@ -15,28 +15,33 @@ declare variable $_:path-to-stylesheets := "../src/";
 
 declare 
     %rest:path("xspec/run")
-    %rest:query-param("raw", "{$raw}", "false")
+    %rest:query-param("xml", "{$xml}", "false")
+    %rest:query-param("query", "{$query}", "false")
     %rest:query-param("xspec", "{$xspec-location}", '../tutorial/xquery-tutorial.xspec')
     %rest:GET
-    %output:method("xml")
-function _:main($xspec-location as xs:string, $raw as xs:string) as item()+ {
+    %output:method("basex")
+function _:main($xspec-location as xs:string, $xml as xs:string, $query as xs:string) as item()+ {
 let $xspec := _:get-xspec($xspec-location)
   , $testQuery := _:xsl-transform-to-xquery($xspec)
-  , $testId := jobs:eval($testQuery, (), map {'cache': true() }), $_ := jobs:wait($testId)
+return
+try {
+  let $testId := jobs:eval($testQuery, (), map {'cache': true() }), $_ := jobs:wait($testId)
   , $testStats := jobs:list-details()[@id=$testId]
   , $testResults := jobs:result($testId)
-return if ($raw ne "false") then $testResults else _:create-html-response($testResults)
+  return if ($query ne "false") then $testQuery else if ($xml ne "false") then $testResults else
+  _:create-html-response(_:xsl-transform(_:get-xsl("reporter/format-xspec-report"), $testResults), 'text/html')
+} catch * {
+  _:create-html-response($err:additional||'&#10;&#10;'||$testQuery, 'text/plain')
+}
 };
 
-declare %private function _:create-html-response($testResults as element()) { 
-let $formatted := _:xsl-transform(_:get-xsl("reporter/format-xspec-report"), $testResults)
-return 
+declare %private function _:create-html-response($testResults as item(), $resultMimeType as xs:string) { 
   (<rest:response>
       <http:response>
-          <http:header name="Content-Type" value="text/html; charset=utf-8"/>
+          <http:header name="Content-Type" value="{$resultMimeType||'; charset=utf-8'}"/>
       </http:response>
   </rest:response>,
-  $formatted)  
+  $testResults)  
 };
 
 declare %private function _:get-xsl($mode as xs:string) as document-node()? {
