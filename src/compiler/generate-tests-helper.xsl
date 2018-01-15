@@ -16,7 +16,7 @@
                 extension-element-prefixes="test"
                 xmlns="http://www.w3.org/1999/XSL/TransformAlias"
                 xmlns:t="http://www.jenitennison.com/xslt/unit-testAlias"
-                exclude-result-prefixes="#default t xhtml"
+                exclude-result-prefixes="#default t xhtml pkg"
                 xmlns:pkg="http://expath.org/ns/pkg"
                 xmlns:__x="http://www.w3.org/1999/XSL/TransformAliasAlias">
   

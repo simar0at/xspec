@@ -14,7 +14,7 @@
                 xmlns:test="http://www.jenitennison.com/xslt/unit-test"
                 xmlns:pkg="http://expath.org/ns/pkg"
                 extension-element-prefixes="test"
-                exclude-result-prefixes="xs xhtml"
+                exclude-result-prefixes="xs xhtml pkg"
                 version="2.0">
   
    <pkg:import-uri>http://www.jenitennison.com/xslt/xspec/generate-query-helper.xsl</pkg:import-uri>

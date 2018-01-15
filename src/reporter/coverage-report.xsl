@@ -13,7 +13,7 @@
   xmlns:test="http://www.jenitennison.com/xslt/unit-test"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:pkg="http://expath.org/ns/pkg"
-  exclude-result-prefixes="xs">
+  exclude-result-prefixes="xs pkg">
 
 <xsl:import href="format-utils.xsl" />
 

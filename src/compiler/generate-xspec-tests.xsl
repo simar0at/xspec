@@ -12,7 +12,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns="http://www.w3.org/1999/XSL/TransformAlias"
   xmlns:test="http://www.jenitennison.com/xslt/unit-test"
-  exclude-result-prefixes="#default test"
+  exclude-result-prefixes="#default test pkg"
   xmlns:x="http://www.jenitennison.com/xslt/xspec"
   xmlns:__x="http://www.w3.org/1999/XSL/TransformAliasAlias"
   xmlns:pkg="http://expath.org/ns/pkg"
